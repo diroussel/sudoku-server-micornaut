@@ -20,7 +20,7 @@ public class SudokuBoard {
     public SudokuBoard copy() {
         int[][] newGrid = new int[9][];
         for (int i = 0; i < 9; i++) {
-            int[] newRow = new int[10];
+            int[] newRow = new int[9];
             System.arraycopy(rows[i], 0, newRow, 0, 9);
             newGrid[i] = newRow;
         }

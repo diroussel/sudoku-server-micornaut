@@ -27,9 +27,9 @@ public class SudokuCli {
         PrintWriter printWriter = new PrintWriter(System.out);
 
         printWriter.println("Solution: ");
-        output.render(p.solution, printWriter);
+        output.render(p.solution, printWriter::println);
         printWriter.println("Puzzle: ");
-        output.render(p.puzzle, printWriter);
+        output.render(p.puzzle, printWriter::println);
         printWriter.flush();
     }
 
