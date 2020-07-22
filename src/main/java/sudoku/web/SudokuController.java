@@ -28,7 +28,7 @@ public class SudokuController {
     @Get("/random.{fmt}")
     public HttpResponse<?> randomBoard(String fmt) {
         long seed = random.nextInt(Integer.MAX_VALUE);
-        return HttpResponse.redirect(URI.create("/sudoku/puzzle/" + seed + '.' + fmt));
+        return HttpResponse.temporaryRedirect(URI.create("/sudoku/puzzle/" + seed + '.' + fmt));
     }
 
     @Get("/puzzle/{seed}.{fmt}")
@@ -60,7 +60,7 @@ public class SudokuController {
     }
 
     private Object render(SudokuBoard board, SudokuOutput output) {
-        StringWriter out = new StringWriter(2048);
+        StringWriter out = new StringWriter(8 * 1024);
         output.render(board, out::write);
         return out.toString();
     }
