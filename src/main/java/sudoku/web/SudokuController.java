@@ -12,6 +12,7 @@ import sudoku.output.SvgOutput;
 import java.io.StringWriter;
 import java.net.URI;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static io.micronaut.http.HttpResponse.ok;
 
@@ -19,7 +20,6 @@ import static io.micronaut.http.HttpResponse.ok;
 public class SudokuController {
 
     private final SudokuService service;
-    private final Random random = new Random();
 
     public SudokuController(SudokuService service) {
         this.service = service;
@@ -27,8 +27,11 @@ public class SudokuController {
 
     @Get("/random.{fmt}")
     public HttpResponse<?> randomBoard(String fmt) {
+        Random random = ThreadLocalRandom.current();
         long seed = random.nextInt(Integer.MAX_VALUE);
         return HttpResponse.temporaryRedirect(URI.create("/sudoku/puzzle/" + seed + '.' + fmt));
+
+        //TODO: investigate why redirects are slow?  They seem to close the http connection
     }
 
     @Get("/puzzle/{seed}.{fmt}")
